@@ -11,20 +11,23 @@ class MessagesController < ApplicationController
   def update
     if @message.update(message_params)
       redirect_to root_path , notice: "メッセージを編集しました。"
-  else 
-    render 'edit'
+    else 
+      render 'edit'
     end
   end
   
   def create
     @message = Message.new(message_params)
-    if @message.save
-   redirect_to root_path , notice: 'メッセージを保存しました'
     
-   else 
-    @messages = Message.all
-    flash.now[:alert] = "メッセージの保存に失敗しました。"
-    render 'index'
+#    binding.pry
+    
+    if @message.save
+     redirect_to root_path , notice: 'メッセージを保存しました'
+    
+    else 
+      @messages = Message.all
+      flash.now[:alert] = "メッセージの保存に失敗しました。"
+      render 'index'
     end
   end
   
@@ -35,7 +38,7 @@ class MessagesController < ApplicationController
   
   private 
   def message_params 
-    params.require(:message).permit(:name, :body)
+    params.require(:message).permit(:name, :body, :age)
   end 
   ##ここまで
   
